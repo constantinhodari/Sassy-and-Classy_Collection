@@ -62,13 +62,19 @@ export default function SiteFooter() {
       <div className="footer-main section-shell">
         <div className="footer-brand-column">
           <a className="brand footer-brand" href="#top">
-            <span className="brand-mark">
-              S<span>&amp;</span>C
+            <img
+              src="/images/brand-logo.jpg"
+              alt="Sassy & Classy Collections Logo"
+              className="brand-logo-img footer-brand-logo"
+              width={54}
+              height={54}
+            />
+            <span className="brand-copy">
+              <span className="brand-name">
+                SASSY <i>&amp;</i> CLASSY
+              </span>
+              <span className="brand-subtitle">C O L L E C T I O N S</span>
             </span>
-            <span className="brand-name">
-              SASSY <i>&amp;</i> CLASSY
-            </span>
-            <span className="brand-subtitle">C O L L E C T I O N S</span>
           </a>
           <p>
             Your style. Your statement.

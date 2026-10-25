@@ -49,7 +49,13 @@ export default function SiteHeader() {
       </button>
 
       <a className="brand" href="#top" aria-label="Sassy and Classy home" onClick={handleNavScroll('#top')}>
-        <span className="brand-mark" aria-hidden="true">✿</span>
+        <img
+          src="/images/brand-logo.jpg"
+          alt="Sassy & Classy Collections Logo"
+          className="brand-logo-img"
+          width={46}
+          height={46}
+        />
         <span className="brand-copy">
           <span className="brand-name">
             SASSY <i>&amp;</i> CLASSY

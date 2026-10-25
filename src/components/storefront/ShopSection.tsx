@@ -159,22 +159,39 @@ function ProductCard({
   const state = stockState(product);
   const badge = product.badge || (state === 'low' ? 'LOW STOCK' : '');
 
+  const primaryImage = product.image || (product.images && product.images[0]?.url) || IMAGE_FALLBACK;
+  const secondaryImage =
+    product.images && product.images.length > 1
+      ? product.images.find((img) => img.url !== primaryImage)?.url || product.images[1]?.url
+      : null;
+
   return (
     <article
-      className="product-card"
+      className="product-card in-view"
       data-product-id={product.id}
-      style={{ transitionDelay: `${(index % 4) * 0.07}s` }}
+      style={{ transitionDelay: `${(index % 4) * 0.05}s` }}
     >
       <div className="product-image-wrap">
         <img
-          className="product-image"
-          src={product.image || IMAGE_FALLBACK}
+          className="product-image primary-image"
+          src={primaryImage}
           alt={product.name}
           loading="lazy"
           onError={(e) => {
             (e.target as HTMLImageElement).src = IMAGE_FALLBACK;
           }}
         />
+        {secondaryImage && (
+          <img
+            className="product-image secondary-image"
+            src={secondaryImage}
+            alt={`${product.name} lifestyle`}
+            loading="lazy"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = IMAGE_FALLBACK;
+            }}
+          />
+        )}
         {badge && (
           <span
             className={`product-badge${state === 'low' ? ' low' : ''}${state === 'out' ? ' sold' : ''}`}
@@ -197,15 +214,27 @@ function ProductCard({
             />
           </svg>
         </button>
-        <button
-          className="product-quick-add"
-          data-action="quick-add"
-          data-id={product.id}
-          disabled={state === 'out'}
-          onClick={() => onAddToCart(product.id)}
-        >
-          {state === 'out' ? 'Currently unavailable' : 'Add to bag +'}
-        </button>
+
+        <div className="product-card-quick-actions">
+          <button
+            className="btn-card-quick-add"
+            data-action="quick-add"
+            data-id={product.id}
+            disabled={state === 'out'}
+            onClick={() => onAddToCart(product.id)}
+          >
+            {state === 'out' ? 'Unavailable' : 'Add to bag +'}
+          </button>
+          <button
+            className="btn-card-quick-view"
+            data-action="details"
+            data-id={product.id}
+            onClick={() => onOpenModal(product.id)}
+            aria-label={`Quick view ${product.name}`}
+          >
+            Quick View
+          </button>
+        </div>
       </div>
 
       <div className="product-info">
@@ -240,7 +269,7 @@ function ProductCard({
             data-id={product.id}
             onClick={() => onOpenModal(product.id)}
           >
-            Quick view
+            Details ↗
           </button>
         </div>
         <button
@@ -251,6 +280,9 @@ function ProductCard({
           aria-label={`Order ${product.name} through WhatsApp`}
           onClick={() => onOrderWhatsApp(product.id)}
         >
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.79 14.07c-.24.67-1.39 1.28-1.92 1.36-.51.08-1.17.11-3.37-.8-2.61-1.08-4.28-3.74-4.41-3.91-.13-.17-1.05-1.39-1.05-2.66s.66-1.89.9-2.14c.24-.25.52-.31.7-.31.18 0 .36 0 .52.01.17.01.4.06.61.57.24.58.82 2 .89 2.15.07.15.12.33.02.53-.1.2-.15.32-.3.5-.15.17-.32.39-.46.52-.15.15-.31.31-.13.62.18.31.79 1.3 1.7 2.11 1.17 1.04 2.15 1.37 2.46 1.52.31.15.49.13.67-.08.18-.21.78-.91.99-1.22.21-.31.42-.26.7-.15.28.11 1.78.84 2.09.99.31.15.52.23.6.36.08.13.08.76-.16 1.43z"/>
+          </svg>
           <span className="order-button-label">Order via WhatsApp</span>
           <span className="order-button-arrow" aria-hidden="true">↗</span>
         </button>

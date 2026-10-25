@@ -109,20 +109,22 @@ export default function WishlistDrawer() {
                       className="small-action"
                       onClick={() => handleView(p.id)}
                     >
-                      View
+                      Quick View ↗
                     </button>
                     <button
                       className="small-action"
                       disabled={stateClass === 'out'}
                       onClick={() => handleAddToCart(p.id)}
+                      style={{ fontWeight: 600, color: stateClass === 'out' ? '#999' : '#141312' }}
                     >
-                      Add to bag
+                      {stateClass === 'out' ? 'Sold out' : 'Add to bag +'}
                     </button>
                     <button
                       className="small-action remove"
                       onClick={() => toggleWishlist(p.id)}
+                      aria-label={`Remove ${p.name} from wishlist`}
                     >
-                      Remove
+                      Remove ×
                     </button>
                   </div>
                 </div>

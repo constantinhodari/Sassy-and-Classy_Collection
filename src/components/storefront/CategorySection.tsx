@@ -68,9 +68,15 @@ export default function CategorySection({ onFilterChange }: Props) {
         <div>
           <h2>Shop by Category</h2>
         </div>
-        <a href="#categories" className="text-link category-view-all">
+        <button
+          className="text-link category-view-all"
+          onClick={() => {
+            dispatch({ type: 'SET_FILTER', payload: 'All' });
+            document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
           View All Categories <span>→</span>
-        </a>
+        </button>
       </div>
       <div className="category-grid" id="categoryGrid">
         {CATEGORIES.map((cat) => (

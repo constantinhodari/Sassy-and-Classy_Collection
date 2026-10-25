@@ -410,42 +410,60 @@ export default function ProductFormModal({ product, onClose }: Props) {
 
               {mode === 'upload' ? (
                 <div className="form-field">
-                  <input
-                    id="productImageFile"
-                    type="file"
-                    multiple
-                    accept="image/png,image/jpeg,image/webp,image/gif,image/avif"
-                    disabled={uploading}
-                    onChange={handleUpload}
-                  />
-                  <small>
-                    JPEG, PNG, WebP, GIF or AVIF · up to {maxMb} MB each. Files are validated on
-                    the server and stored in MongoDB GridFS.
-                  </small>
-                  {uploading && (
-                    <div
-                      role="progressbar"
-                      aria-valuenow={progress}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      style={{
-                        marginTop: 8,
-                        height: 6,
-                        borderRadius: 4,
-                        background: '#e6ded2',
-                        overflow: 'hidden',
-                      }}
-                    >
+                  <div
+                    className="admin-upload-dropzone"
+                    onClick={() => {
+                      if (!uploading) document.getElementById('productImageFile')?.click();
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if ((e.key === 'Enter' || e.key === ' ') && !uploading) {
+                        e.preventDefault();
+                        document.getElementById('productImageFile')?.click();
+                      }
+                    }}
+                  >
+                    <input
+                      id="productImageFile"
+                      type="file"
+                      multiple
+                      accept="image/png,image/jpeg,image/webp,image/gif,image/avif"
+                      disabled={uploading}
+                      onChange={handleUpload}
+                      style={{ display: 'none' }}
+                    />
+                    <div className="admin-upload-dropzone-icon">☁️</div>
+                    <strong>{uploading ? `Uploading to MongoDB... (${progress}%)` : 'Click or drop product photos here'}</strong>
+                    <small>
+                      JPEG, PNG, WebP, GIF or AVIF · up to {maxMb} MB each · Stored securely in MongoDB GridFS
+                    </small>
+                    {uploading && (
                       <div
+                        role="progressbar"
+                        aria-valuenow={progress}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
                         style={{
-                          width: `${progress}%`,
-                          height: '100%',
-                          background: '#1c1b19',
-                          transition: 'width .2s ease',
+                          marginTop: 12,
+                          width: '100%',
+                          height: 6,
+                          borderRadius: 4,
+                          background: '#e6ded2',
+                          overflow: 'hidden',
                         }}
-                      />
-                    </div>
-                  )}
+                      >
+                        <div
+                          style={{
+                            width: `${progress}%`,
+                            height: '100%',
+                            background: '#1c1b19',
+                            transition: 'width .2s ease',
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="form-field">

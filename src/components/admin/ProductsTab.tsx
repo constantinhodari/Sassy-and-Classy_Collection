@@ -48,7 +48,7 @@ export default function ProductsTab({ onAddProduct, onEditProduct }: Props) {
         />
         <span style={{ fontSize: 9, color: '#899198' }}>
           {state.products.length} product
-          {state.products.length === 1 ? '' : 's'} in this browser
+          {state.products.length === 1 ? '' : 's'} in MongoDB Atlas
         </span>
       </div>
 

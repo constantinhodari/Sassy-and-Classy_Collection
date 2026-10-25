@@ -70,9 +70,13 @@ export default function AdminPage() {
           <section className="admin-app" aria-label="Store administration">
             <aside className="admin-sidebar">
               <div className="admin-sidebar-brand">
-                <span className="brand-mark">
-                  S<span>&amp;</span>C
-                </span>
+                <img
+                  src="/images/brand-logo.jpg"
+                  alt="Sassy & Classy Collections Logo"
+                  className="brand-logo-img admin-brand-logo"
+                  width={42}
+                  height={42}
+                />
                 <div>
                   <strong>SASSY &amp; CLASSY</strong>
                   <small>STORE STUDIO</small>
