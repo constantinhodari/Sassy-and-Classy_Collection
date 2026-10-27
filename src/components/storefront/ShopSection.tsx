@@ -171,7 +171,14 @@ function ProductCard({
       data-product-id={product.id}
       style={{ transitionDelay: `${(index % 4) * 0.05}s` }}
     >
-      <div className="product-image-wrap">
+      <div
+        className="product-image-wrap"
+        role="button"
+        tabIndex={0}
+        onClick={() => onOpenModal(product.id)}
+        onKeyDown={(e) => e.key === 'Enter' && onOpenModal(product.id)}
+        aria-label={`View details for ${product.name}`}
+      >
         <img
           className="product-image primary-image"
           src={primaryImage}
@@ -205,7 +212,10 @@ function ProductCard({
           data-id={product.id}
           aria-label={`${isWishlisted ? 'Remove' : 'Add'} ${product.name} ${isWishlisted ? 'from' : 'to'} wishlist`}
           aria-pressed={isWishlisted}
-          onClick={() => onToggleWishlist(product.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleWishlist(product.id);
+          }}
         >
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path
@@ -221,7 +231,10 @@ function ProductCard({
             data-action="quick-add"
             data-id={product.id}
             disabled={state === 'out'}
-            onClick={() => onAddToCart(product.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart(product.id);
+            }}
           >
             {state === 'out' ? 'Unavailable' : 'Add to bag +'}
           </button>
@@ -229,7 +242,10 @@ function ProductCard({
             className="btn-card-quick-view"
             data-action="details"
             data-id={product.id}
-            onClick={() => onOpenModal(product.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenModal(product.id);
+            }}
             aria-label={`Quick view ${product.name}`}
           >
             Quick View
